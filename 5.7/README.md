@@ -1,4 +1,10 @@
 # MYSQL 5.7
+
+## Build
+- Run `./download-dependencies.sh`
+- Run `docker build -t mysql-ubi:8`
+
+## Notes
 Based off the Docker file from mysql/mysql-docker including an entrypoint and healthcheck.
 
 Dockerfile modified to install mysql-community-server-minimal and mysql-shell RPMs directly, without using the mysql-community yum server. Manually added and imported RPM-GPG-KEY-mysql.

@@ -1,12 +1,10 @@
 # mysql
 
 This docker codes are modified from [IronBank repository](https://repo1.dso.mil/dsop/opensource/mysql/mysql8).
-RedHat UBI 8 is retrieved from DOcker Hub instead of from DSO's registry.
+RedHat UBI 8 is retrieved from Docker Hub instead of from DSO's registry.
 
 ## Build
-- Install Python 3 and Docker
-- Install [hardening importer](https://github.com/fandigunawan/hardening-importer) which was mirrored from [here](https://git.jharmison.com/jharmison/hardening-importer)
-- Run `hardening import` in Dockerfile and hardening_manifest.yaml directory.
+- Run `./download-dependencies.sh`
 - Run `docker build -t mysql-ubi:8`
 
 ## Original notes
