@@ -186,24 +186,25 @@ EOF
 			fi
 		fi
 
-		echo
-		echo '[Entrypoint] MySQL init process done. Ready for start up.'
-		echo
-	fi
-
-	# Used by healthcheck to make sure it doesn't mistakenly report container
-	# healthy during startup
-	# Put the password into the temporary config file
-	touch /var/run/mysqld/healthcheck.cnf
-	cat >"/var/run/mysqld/healthcheck.cnf" <<EOF
+                # Used by healthcheck to make sure it doesn't mistakenly report container
+                # healthy during startup
+                # Put the password into the temporary config file
+                touch /var/lib/mysql/healthcheck.cnf
+                cat >"/var/lib/mysql/healthcheck.cnf" <<EOF
 [client]
 user=healthchecker
 socket=${SOCKET}
 password=healthcheckpass
 EOF
-	touch /var/run/mysqld/mysql-init-complete
-	# MySQL User cannot chown directory since it is not root.  Instead, data dir should be mounted as read/write.
-	#chown -R mysql:mysql "$DATADIR"
+                touch /var/lib/mysql/mysql-init-complete
+                # MySQL User cannot chown directory since it is not root.  Instead, data dir should be mounted as read/write.
+                #chown -R mysql:mysql "$DATADIR"
+
+		echo
+		echo '[Entrypoint] MySQL init process done. Ready for start up.'
+		echo
+	fi
+
 	echo "[Entrypoint] Starting MySQL ${VERSION}"
 fi
 

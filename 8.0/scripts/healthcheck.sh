@@ -16,9 +16,9 @@
 
 # The mysql-init-complete file is touched by the entrypoint file before the
 # main server process is started
-if [ -f /var/run/mysqld/mysql-init-complete ]; # The entrypoint script touches this file
+if [ -f /var/lib/mysql/mysql-init-complete ]; # The entrypoint script touches this file
 then # Ping server to see if it is ready
-  mysqladmin --defaults-extra-file=/var/run/mysqld/healthcheck.cnf ping
+  mysqladmin --defaults-extra-file=/var/lib/mysql/healthcheck.cnf ping
 else # Initialization still in progress
   exit 1
 fi

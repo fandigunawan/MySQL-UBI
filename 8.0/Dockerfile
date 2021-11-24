@@ -45,8 +45,8 @@ RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-mysql \
   && rm /*.rpm \
   && chown -R mysql:mysql /var/lib/mysql
 
-COPY scripts/entrypoint.sh scripts/healthcheck.sh /
-COPY config/my.cnf /etc/my.cnf
+COPY --chown=mysql:mysql scripts/entrypoint.sh scripts/healthcheck.sh /
+COPY --chown=mysql:mysql config/my.cnf /etc/my.cnf
 
 ENTRYPOINT ["/entrypoint.sh"]
 HEALTHCHECK CMD /healthcheck.sh

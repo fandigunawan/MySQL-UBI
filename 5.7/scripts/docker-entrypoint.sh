@@ -273,6 +273,7 @@ docker_setup_db() {
 
 		${passwordSet}
 		GRANT ALL ON *.* TO 'root'@'localhost' WITH GRANT OPTION ;
+                CREATE USER 'healthchecker'@'localhost' IDENTIFIED BY 'healthcheckpass';
 		FLUSH PRIVILEGES ;
 		${rootCreate}
 		DROP DATABASE IF EXISTS test ;
@@ -293,6 +294,17 @@ docker_setup_db() {
 			docker_process_sql --database=mysql <<<"GRANT ALL ON \`${MYSQL_DATABASE//_/\\_}\`.* TO '$MYSQL_USER'@'%' ;"
 		fi
 	fi
+        # Used by healthcheck to make sure it doesn't mistakenly report container
+	# healthy during startup
+	# Put the password into the temporary config file
+	touch /var/lib/mysql/healthcheck.cnf
+	cat >"/var/lib/mysql/healthcheck.cnf" <<EOF
+[client]
+user=healthchecker
+socket=${SOCKET}
+password=healthcheckpass
+EOF
+       	touch /var/lib/mysql/mysql-init-complete
 }
 
 _mysql_passfile() {
